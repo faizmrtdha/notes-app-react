@@ -1,10 +1,6 @@
 import React from "react"
 
-const Navbar = () => {
-  const onSearchNotes = ({ target: { value } }) => {
-    console.log(value)
-  }
-
+const Navbar = ({ onSearchNotes }) => {
   return (
     <header className="note-app__header">
       <h1>Notes</h1>
