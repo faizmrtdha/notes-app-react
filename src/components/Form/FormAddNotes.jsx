@@ -1,47 +1,5 @@
 import React, { useState } from "react"
 
-// class FormAddNotes extends Component {
-//   constructor(props) {
-//     super(props)
-//     this.state = {
-//       limitChar: 50,
-//       title: "",
-//       body: "",
-//     }
-//     this.coba = this.coba.bind(this)
-//     this.onInputTitle = this.onInputTitle.bind(this)
-//     this.onInputBody = this.onInputBody.bind(this)
-//   }
-
-//   onInputTitle({ target: { value } }) {
-//     const lengthChar = value.length
-//     this.setState({ title: value })
-//     if (value.length > 0) {
-//       this.setState({ limitChar: 50 - lengthChar })
-//     } else this.state({ limitChar: 50 })
-//   }
-
-//   onInputBody({ target: { value } }) {
-//     this.setState({ body: value })
-//   }
-
-//   coba(e) {
-//     e.preventDefault()
-//     const data = getInitialData()
-//     const newNotes = {
-//       id: data.length + 1,
-//       title: this.state.title,
-//       body: this.state.body,
-//       archived: false,
-//       createdAt: new Date().toISOString(),
-//     }
-//     data.push(newNotes)
-//     console.log(data)
-//   }
-// }
-
-// export default FormAddNotes
-
 const FormAddNotes = ({ notes, onAddNotes }) => {
   const [title, setTitle] = useState("")
   const [body, setBody] = useState("")
@@ -67,6 +25,8 @@ const FormAddNotes = ({ notes, onAddNotes }) => {
       createdAt: new Date().toISOString(),
     }
     onAddNotes(newNotes)
+    setBody("")
+    setTitle("")
   }
   return (
     <div className="note-input">

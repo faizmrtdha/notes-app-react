@@ -12,6 +12,7 @@ class Container extends Component {
 
     this.state = {
       notes: getInitialData(),
+      filteredNotes: [],
     }
 
     this.addNotesHandler = this.addNotesHandler.bind(this)
@@ -34,23 +35,22 @@ class Container extends Component {
   archieveNoteHandler(id) {
     const filterNote = this.state.notes.filter((note) => note.id === id)
     filterNote.forEach((element) => (element.archived = !element.archived))
-    const notes = [...this.state.notes, filterNote]
-    this.setState({ notes })
+    this.setState({ notes: [...this.state.notes, filterNote] })
   }
 
   unArchiveNoteHandler(id) {
     const filterNote = this.state.notes.filter((note) => note.id === id)
     filterNote.forEach((element) => (element.archived = !element.archived))
-    const notes = [...this.state.notes, filterNote]
-    this.setState({ notes })
+    this.setState({ notes: [...this.state.notes, filterNote] })
   }
 
   searchNoteHandler({ target: { value } }) {
     if (value) {
-      const notes = this.state.notes.filter((note) => note.title.includes(value))
-      console.log(notes)
-      this.setState({ notes })
-    } else this.setState({ notes: this.state.notes })
+      const notes = this.state.notes.filter((note) =>
+        note.title?.toLowerCase().includes(value?.toLowerCase())
+      )
+      this.setState({ filteredNotes: notes })
+    } else this.setState({ filteredNotes: [] })
   }
 
   render() {
@@ -63,8 +63,14 @@ class Container extends Component {
             notes={this.state.notes}
             onDeleteNote={this.deleteNoteHandler}
             onArchieveNote={this.archieveNoteHandler}
+            filteredNotes={this.state.filteredNotes}
           />
-          <ListArchieveNotes notes={this.state.notes} onDeleteNote={this.deleteNoteHandler} />
+          <ListArchieveNotes
+            notes={this.state.notes}
+            onDeleteNote={this.deleteNoteHandler}
+            onMoveNote={this.unArchiveNoteHandler}
+            filteredNotes={this.state.filteredNotes}
+          />
         </div>
       </>
     )
