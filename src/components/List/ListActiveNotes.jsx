@@ -1,16 +1,18 @@
 import CardNotes from "../Card/CardNotes"
 
-const ListActiveNotes = ({ notes, onDeleteNote, onArchieveNote, filteredNotes }) => {
+const ListActiveNotes = ({ notes, onDeleteNote, onArchieveNote, filteredNotes, onSearch }) => {
   let activeNotes = notes
+
   if (filteredNotes.length > 0) {
-    activeNotes = filteredNotes.filter((note) => note.archived === false)
-  } else {
-    if (notes.length > 0 && notes.filter((note) => note.archived === false))
-      activeNotes = notes.filter((note) => note.archived === false)
-  }
+    activeNotes = filteredNotes
+  } else if (!filteredNotes.length && onSearch) activeNotes = []
+  else activeNotes = notes
+
+  if (activeNotes && activeNotes.length > 0)
+    activeNotes = activeNotes.filter((note) => note.archived === false)
 
   const NotesActive = () => {
-    if (!activeNotes.length) return <p class="notes-list__empty-message">Tidak ada catatan</p>
+    if (!activeNotes.length) return <p className="notes-list__empty-message">Tidak ada catatan</p>
     return (
       <div className="notes-list">
         {activeNotes.length > 0 &&
